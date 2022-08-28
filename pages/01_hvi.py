@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from todict import generate_excel_download_link
+
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
@@ -89,4 +89,4 @@ if uploaded_f is not None:
 
     # Download function
 
-    generate_excel_download_link(hvi_dataframe)
+
