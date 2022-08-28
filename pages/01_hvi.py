@@ -1,11 +1,22 @@
 import streamlit as st
 import pandas as pd
-
+from io import StringIO, BytesIO  # Standard Python Module
+import base64
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
 
 uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
+
+
+def generate_excel_download_link(df):
+    # Credit Excel: https://discuss.streamlit.io/t/how-to-add-a-download-excel-csv-function-to-a-button/4474/5
+    towrite = BytesIO()
+    df.to_excel(towrite, encoding="utf-8", index=False, header=True)  # write to BytesIO buffer
+    towrite.seek(0)  # reset pointer
+    b64 = base64.b64encode(towrite.read()).decode()
+    href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data_download.xlsx">Download Excel File</a>'
+    return st.markdown(href, unsafe_allow_html=True)
 
 pays = {1: 'US/Canada', 1242: 'Bahamas', 1246: 'Barbade', 1264: 'Anguilla', 1268: 'Antigua et Barbuda',
         1284: 'Iles Vierges Britanniques', 1340: 'Iles Vierges Americaines', 1345: 'Iles Caïmans', 1441: 'Bermudes',
@@ -86,6 +97,7 @@ if uploaded_f is not None:
     st.write("nombre de numéros uniques ")
     st.write(unique_val)
     # st.write(hvi_dataframe)
+    generate_excel_download_link(hvi_dataframe)
 
     # Download function
 
