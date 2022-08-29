@@ -76,12 +76,12 @@ def hvi():
     df['first_range'] = df['num_ligne'].astype(str).str.replace('.', '').str[0:3]
     df['first_range'] = df['first_range'].astype(int)
     st.write(df['first_range'].dtype)
-    st.write([type(k) for k in pays.keys()])
-    for keys, value in pays.items():
-        if keys in df['first_range']:
-            df['checked'] = "True"
-        else:
-            df['checked'] = "False"
+    # st.write([type(k) for k in pays.keys()])
+    # for keys, value in pays.items():
+    #     if keys in df['first_range']:
+    #         df['checked'] = "True"
+    #     else:
+    #         df['checked'] = "False"
 
     df = df.sort_values('h_appel', ascending=True)
     dataframe = df[['num_ligne', 'h_appel']]
