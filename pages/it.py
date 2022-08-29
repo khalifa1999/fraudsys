@@ -21,7 +21,7 @@ def it():
 
     df = pd.read_excel(uploaded_f, engine='openpyxl')
 
-    it_df = df.groupby('num_ligne')[['nb_appels', 'heure']].sum()
+    it_df = df.groupby('num_ligne')[['nb_appels']].sum()
     it_df['outils'] = "IT"
     it_df = it_df.sort_values(
         by='nb_appels',

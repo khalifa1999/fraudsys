@@ -18,6 +18,7 @@ def generate_excel_download_link(df):
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data_download.xlsx">Download Excel File</a>'
     return st.markdown(href, unsafe_allow_html=True)
 
+
 pays = {1: 'US/Canada', 1242: 'Bahamas', 1246: 'Barbade', 1264: 'Anguilla', 1268: 'Antigua et Barbuda',
         1284: 'Iles Vierges Britanniques', 1340: 'Iles Vierges Americaines', 1345: 'Iles Caïmans', 1441: 'Bermudes',
         1473: 'Grenade', 1649: 'Iles Turques-et-Caïques', 1664: 'Montserrat', 1670: 'Marianne du Nord', 1671: 'Guam',
@@ -66,24 +67,22 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
                       246: 'Diego Garcia', 809: 'Dominicaine Republique', 500: 'Falkland', 36: 'Hongrie',
                       691: 'Micronesie', 51: 'Perou', 378: 'San Marino'}
 
+
 # For hvi
 @st.experimental_memo
 def hvi():
     df = pd.read_excel(uploaded_f, engine='openpyxl')
     df['h_appel'] = pd.to_datetime(df['h_appel'])
 
-    df['first_range'] = df['num_ligne'].astype(str).str.replace('.', '').str[0:3]
-    df['first_range'] = df['first_range'].astype(int)
-    st.write(df['first_range'].dtype)
     # st.write([type(k) for k in pays.keys()])
     # for keys, value in pays.items():
     #     if keys in df['first_range']:
     #         df['checked'] = "True"
-    #     else:
+    #
     #         df['checked'] = "False"
 
     df = df.sort_values('h_appel', ascending=True)
-    dataframe = df[['num_ligne', 'h_appel']]
+    dataframe = df[['num_ligne']]
     return dataframe
 
 
@@ -99,5 +98,3 @@ if uploaded_f is not None:
     generate_excel_download_link(hvi_dataframe)
 
     # Download function
-
-
