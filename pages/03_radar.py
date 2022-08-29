@@ -1,12 +1,14 @@
-import streamlit as st
-import pandas as pd
-from io import StringIO, BytesIO  # Standard Python Module
 import base64
+from io import BytesIO  # Standard Python Module
+
+import pandas as pd
+import streamlit as st
 
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
-uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
+uploaded_f = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
+
 
 def generate_excel_download_link(df):
     # Credit Excel: https://discuss.streamlit.io/t/how-to-add-a-download-excel-csv-function-to-a-button/4474/5
@@ -16,6 +18,7 @@ def generate_excel_download_link(df):
     b64 = base64.b64encode(towrite.read()).decode()
     href = f'<a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,{b64}" download="data_download.xlsx">Download Excel File</a>'
     return st.markdown(href, unsafe_allow_html=True)
+
 
 pays = {1: 'US/Canada', 1242: 'Bahamas', 1246: 'Barbade', 1264: 'Anguilla', 1268: 'Antigua et Barbuda',
         1284: 'Iles Vierges Britanniques', 1340: 'Iles Vierges Americaines', 1345: 'Iles Caïmans', 1441: 'Bermudes',
@@ -67,6 +70,7 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 
 
 # For radar
+
 def radar():
     df = pd.read_excel(uploaded_f, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
@@ -108,4 +112,3 @@ if uploaded_f is not None:
     # Valeur d'aggregation splitter values
     id = radar_dataframe["Valeur d'aggregation"].to_dict()
     idval = id.values()
-    import math
