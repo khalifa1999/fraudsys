@@ -67,7 +67,6 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 
 
 # For radar
-@st.experimental_memo
 def radar():
     df = pd.read_excel(uploaded_f, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])

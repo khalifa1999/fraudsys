@@ -1,15 +1,17 @@
-import streamlit as st
+import warnings
+
 import pandas as pd
+import streamlit as st
 
 st.title("Automation Application")
 st.subheader("IT traitement")
 
-
 uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
+warnings.filterwarnings('ignore')
 
 
 # For IT
-@st.experimental_memo
+
 def it():
     # color function
     def colour(value):
@@ -21,7 +23,7 @@ def it():
 
     df = pd.read_excel(uploaded_f, engine='openpyxl')
 
-    it_df = df.groupby('num_ligne')[['nb_appels']].sum()
+    it_df = df.groupby('num_ligne')[['nb_appels', 'heure']].sum()
     it_df['outils'] = "IT"
     it_df = it_df.sort_values(
         by='nb_appels',

@@ -1,14 +1,16 @@
-import streamlit as st
-import pandas as pd
-from io import StringIO, BytesIO  # Standard Python Module
 import base64
+from io import BytesIO  # Standard Python Module
+
+import pandas as pd
+import streamlit as st
+import warnings
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
 
 uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
 
-
+warnings.filterwarnings('ignore')
 def generate_excel_download_link(df):
     # Credit Excel: https://discuss.streamlit.io/t/how-to-add-a-download-excel-csv-function-to-a-button/4474/5
     towrite = BytesIO()
@@ -69,7 +71,7 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 
 
 # For hvi
-@st.experimental_memo
+
 def hvi():
     df = pd.read_excel(uploaded_f, engine='openpyxl')
     df['h_appel'] = pd.to_datetime(df['h_appel'])
@@ -81,13 +83,12 @@ def hvi():
     #
     #         df['checked'] = "False"
 
-    df = df.sort_values('h_appel', ascending=True)
-    dataframe = df[['num_ligne']]
-    return dataframe
+    return df
 
 
 if uploaded_f is not None:
     hvi_dataframe = hvi()
+    hvi_dataframe = hvi_dataframe.sort_values('h_appel', ascending=True)
     st.dataframe(hvi_dataframe)
     # for hvi
     unique_val = len(hvi_dataframe['h_appel'].unique())
