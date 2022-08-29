@@ -75,15 +75,15 @@ def radar():
 
 
 if uploaded_f is not None:
-    hvi_dataframe = radar()
-    st.dataframe(hvi_dataframe)
+    radar_dataframe = radar()
+    st.dataframe(radar_dataframe)
 
     # for radar
-    unique_val = len(hvi_dataframe.index.unique())
+    unique_val = len(radar_dataframe.index.unique())
     st.write(unique_val)
 
     # Use dataframe to make our treatments
-    cdr = hvi_dataframe[["Valeur d'aggregation", "Nombre de cdr participants", "Pays Origine"]]
+    cdr = radar_dataframe[["Valeur d'aggregation", "Nombre de cdr participants", "Pays Origine"]]
     cdr = cdr.sort_values(
         "Nombre de cdr participants",
         ascending=False
@@ -107,6 +107,6 @@ if uploaded_f is not None:
     st.write(pays.keys())
 
     # Valeur d'aggregation splitter values
-    id = hvi_dataframe["Valeur d'aggregation"].to_dict()
+    id = radar_dataframe["Valeur d'aggregation"].to_dict()
     idval = id.values()
     import math

@@ -32,9 +32,9 @@ def it():
 
 
 if uploaded_f is not None:
-    hvi_dataframe = it()
-    st.dataframe(hvi_dataframe)
+    it_dataframe = it()
+    st.dataframe(it_dataframe)
 
     # for it
-    unique_val = len(hvi_dataframe.index.unique())
+    unique_val = len(it_dataframe.index.unique())
     st.write(unique_val)

@@ -70,7 +70,6 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 @st.experimental_memo
 def hvi():
     df = pd.read_excel(uploaded_f, engine='openpyxl')
-    df['num_ligne'] = df['num_ligne']
     df['h_appel'] = pd.to_datetime(df['h_appel'])
 
     df['first_range'] = df['num_ligne'].astype(str).str.replace('.', '').str[0:3]
