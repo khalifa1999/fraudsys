@@ -7,7 +7,7 @@ import streamlit as st
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
-uploaded_f = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
+uploaded_fradar = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
 
 
 def generate_excel_download_link(df):
@@ -72,12 +72,12 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 # For radar
 
 def radar():
-    df = pd.read_excel(uploaded_f, engine='openpyxl')
+    df = pd.read_excel(uploaded_fradar, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
     return df
 
 
-if uploaded_f is not None:
+if uploaded_fradar is not None:
     radar_dataframe = radar()
     st.dataframe(radar_dataframe)
 

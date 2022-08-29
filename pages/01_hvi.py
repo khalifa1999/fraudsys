@@ -7,7 +7,7 @@ import streamlit as st
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
-uploaded_f = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
+uploaded_fhvi = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
 
 
 
@@ -73,7 +73,7 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 # For hvi
 
 def hvi():
-    hvi_df = pd.read_excel(uploaded_f, engine='openpyxl')
+    hvi_df = pd.read_excel(uploaded_fhvi, engine='openpyxl')
     hvi_df['h_appel'] = pd.to_datetime(hvi_df['h_appel'])
 
     # st.write([type(k) for k in pays.keys()])
@@ -85,7 +85,7 @@ def hvi():
     return hvi_df
 
 
-if uploaded_f is not None:
+if uploaded_fhvi is not None:
     hvi_dataframe = hvi()
     hvi_dataframe = hvi_dataframe.sort_values('h_appel', ascending=True)
     st.dataframe(hvi_dataframe)
