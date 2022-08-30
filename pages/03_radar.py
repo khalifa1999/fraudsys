@@ -7,7 +7,7 @@ import streamlit as st
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
-uploaded_fradar = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'])
+uploaded_fradar = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'], key='radarFile')
 
 
 def generate_excel_download_link(df):

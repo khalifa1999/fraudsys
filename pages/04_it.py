@@ -5,7 +5,7 @@ st.title("Automation Application")
 st.subheader("IT traitement")
 
 
-uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'])
+uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'], key='itFile')
 
 
 # For IT
