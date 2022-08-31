@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import base64
+from io import BytesIO  # Standard Python Module
 
 st.title("Automation Application")
 st.subheader("IT traitement")
