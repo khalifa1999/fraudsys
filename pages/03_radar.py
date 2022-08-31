@@ -70,16 +70,21 @@ minute_indivisible = {682: ' Cook island ', 679: ' Fidji island ', 689: ' French
 
 
 # For radar
-
+@st.experimental_memo
 def radar():
     df = pd.read_excel(uploaded_fradar, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
+    df['range 7'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:7]
+    df['range 8'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:8]
+    df['range 9'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:9]
+
+    # creer une colonne range verifier si un range y apparait plus de 2 fois grace
+    # a count restituer cela sous forme de df avec le range et le compte
     return df
 
 
 if uploaded_fradar is not None:
     radar_dataframe = radar()
-    st.dataframe(radar_dataframe)
 
     # for radar
     unique_val = len(radar_dataframe.index.unique())
@@ -105,10 +110,14 @@ if uploaded_fradar is not None:
     cdr = cdr.style.applymap(colour, subset=["Nombre de cdr participants"])
     st.dataframe(cdr)
 
+    st.write(radar_dataframe['range 8'].value_counts(dropna=False))
+
     generate_excel_download_link(cdr)
 
-    st.write(pays.keys())
+
+
+    # st.write(pays.keys())
 
     # Valeur d'aggregation splitter values
-    id = radar_dataframe["Valeur d'aggregation"].to_dict()
-    idval = id.values()
+    # id = radar_dataframe["Valeur d'aggregation"].to_dict()
+    # idval = id.values()
