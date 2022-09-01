@@ -91,7 +91,7 @@ if uploaded_fradar is not None:
     st.write(unique_val)
 
     # Use dataframe to make our treatments
-    cdr = radar_dataframe[["Valeur d'aggregation", "Nombre de cdr participants", "Pays Origine"]]
+    cdr = radar_dataframe[["Valeur d'aggregation", "Nombre de cdr participants", "Pays Origine", "range 8"]]
     cdr = cdr.sort_values(
         "Nombre de cdr participants",
         ascending=False
