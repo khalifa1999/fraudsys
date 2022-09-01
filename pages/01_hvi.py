@@ -7,7 +7,7 @@ import streamlit as st
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
-uploaded_fhvi = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'],  key='hviFile')
+uploaded_fhvi = st.sidebar.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'],  key='hviFile')
 
 
 

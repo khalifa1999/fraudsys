@@ -7,7 +7,7 @@ import streamlit as st
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
-uploaded_fradar = st.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'], key='radarFile')
+uploaded_fradar = st.sidebar.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'], key='radarFile')
 
 
 def generate_excel_download_link(df):
@@ -107,14 +107,19 @@ if uploaded_fradar is not None:
         return 'color: %s' % color
 
 
+    # Let's apply the sorting function
+
+    biggest = len(radar_dataframe.index.unique().tolist())
+    slider = st.sidebar.slider(
+        "We're gonna display the different functions depending of the slide value", 1, biggest, 30
+    )
+    cdr = cdr.nlargest(slider, 'Nombre de cdr participants')
+
     cdr = cdr.style.applymap(colour, subset=["Nombre de cdr participants"])
     st.dataframe(cdr)
 
     st.write(radar_dataframe['range 8'].value_counts(dropna=False))
-
     generate_excel_download_link(cdr)
-
-
 
     # st.write(pays.keys())
 
