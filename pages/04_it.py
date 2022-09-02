@@ -1,6 +1,6 @@
 import base64
 from io import BytesIO  # Standard Python Module
-
+from filter import filter_dataframe
 import pandas as pd
 import streamlit as st
 
@@ -45,9 +45,6 @@ def it():
     st.write("+34636991906")
     st.write(df['retransformation'][20])
 
-
-
-
     # for x in df['cleanumber']:
     #    df['test'] = ''.join(("+", x))
     # st.write(df['test'])
@@ -86,7 +83,6 @@ if uploaded_f is not None:
 
     unique_val = len(it_dataframe.index.unique())
     st.write(unique_val)
-
 
     st.dataframe(it_dataframe)
     generate_excel_download_link(it_dataframe)

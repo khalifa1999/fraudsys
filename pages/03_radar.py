@@ -4,6 +4,8 @@ from io import BytesIO  # Standard Python Module
 import pandas as pd
 import streamlit as st
 
+from filter import filter_dataframe
+
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
@@ -116,9 +118,11 @@ if uploaded_fradar is not None:
     cdr = cdr.nlargest(slider, 'Nombre de cdr participants')
 
     cdr = cdr.style.applymap(colour, subset=["Nombre de cdr participants"])
-    st.dataframe(cdr)
+    # st.dataframe(cdr)
+    st.dataframe(filter_dataframe(cdr))
 
-    st.write(radar_dataframe['range 8'].value_counts(dropna=False))
+    st.dataframe(radar_dataframe['range 8'].value_counts(dropna=False)
+                 )
     generate_excel_download_link(cdr)
 
     # st.write(pays.keys())
