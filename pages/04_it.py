@@ -1,8 +1,12 @@
 import base64
 from io import BytesIO  # Standard Python Module
-from filter import filter_dataframe
+
 import pandas as pd
+import phonenumbers
 import streamlit as st
+from phonenumbers import geocoder
+
+from filter import filter_dataframe
 
 st.title("Automation Application")
 st.subheader("IT traitement")
@@ -35,40 +39,37 @@ def it():
     df['Indicatif'] = df["num_ligne"].astype(str).str.replace('.', '').str[0:3]
     df['cleanumber'] = df["num_ligne"].astype(str).str.replace('\.0', '')
 
-    it_df = df.groupby(['num_ligne', 'Indicatif'], as_index=False)[['nb_appels']].sum()
+    # st.write(type("+34636991906"))
+    # st.write("+34636991906")
+
+    df['retransformation'] = df['cleanumber'].apply(lambda x: "+" + str(x))
+    parse = phonenumbers.parse(df['retransformation'][1])
+    # st.write(geocoder.description_for_number(parse, 'en'))
+
+    list = df['retransformation'].values.tolist()
+    st.write(list)
+    df['pays'] = ""
+
+    cpt = 0
+    for x in df['retransformation']:
+        try:
+            parse = phonenumbers.parse(df['retransformation'][cpt])
+            pays = geocoder.description_for_number(parse, 'en')
+            # st.write(pays)
+            df['pays'][cpt] = pays
+        except ValueError as e:
+            raise Exception('Erreur sur le numero from ') from e
+            pass
+        cpt += 1
+
+    it_df = df.groupby(['num_ligne', 'pays'], as_index=False)[['nb_appels']].sum()
     it_df['outils'] = "IT"
 
-    df['retransformation'] = "+" + df['cleanumber']
-
-    st.write(type(df['retransformation'][20]))
-    st.write(type("+34636991906"))
-    st.write("+34636991906")
-    st.write(df['retransformation'][20])
-
-    # for x in df['cleanumber']:
-    #    df['test'] = ''.join(("+", x))
-    # st.write(df['test'])
-
-    # for x in df['test']:
-    # df['phone number']
-
-    #    number = phonenumbers.parse(x)
-    #    if phonenumbers.is_valid_number(number):
-    #        tab[a] = number
-
-    #    else:
-    #        pass
-
-    # pays = geocoder.description_for_number(df['phone number'][0], 'en')
-    # st.write(df['cleanumber'])
-
-    # st.write(df)
-
     biggest = len(it_df.index.unique().tolist())
-    slider = st.sidebar.slider(
-        "We're gonna display the different functions depending of the slide value", 1, biggest, 10
-    )
-    it_df = it_df.nlargest(slider, 'nb_appels')
+    # slider = st.sidebar.slider(
+    #    "We're gonna display the different functions depending of the slide value", 1, biggest, 10
+    # )
+    # it_df = it_df.nlargest(slider, 'nb_appels')
 
     it_df = it_df.sort_values(
         by='nb_appels',
@@ -83,8 +84,8 @@ if uploaded_f is not None:
 
     unique_val = len(it_dataframe.index.unique())
     st.write(unique_val)
+    st.dataframe(filter_dataframe(it_dataframe))
 
-    st.dataframe(it_dataframe)
     generate_excel_download_link(it_dataframe)
 
     # for it

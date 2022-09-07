@@ -8,7 +8,7 @@ from filter import filter_dataframe
 
 st.title("Automation Application")
 st.subheader("HVI traitement")
-uploaded_fhvi = st.sidebar.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'],  key='hviFile')
+uploaded_fhvi = st.sidebar.file_uploader('Choose xlsx file', type=['xlsx', 'xlsb'],  key='hviFile')
 
 
 

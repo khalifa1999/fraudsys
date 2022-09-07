@@ -9,10 +9,7 @@ from pandas.api.types import (
 
 st.title("Auto Filter Dataframes in Streamlit")
 
-st.write(
-    """Credit To The Streamlit Data Science Team
-    """
-)
+
 
 
 def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:

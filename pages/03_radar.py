@@ -9,7 +9,7 @@ from filter import filter_dataframe
 st.title("Automation Application")
 st.subheader("Radar traitement")
 
-uploaded_fradar = st.sidebar.file_uploader('Choissez un fichier', type=['xlsx', 'xlsb'], key='radarFile')
+uploaded_fradar = st.sidebar.file_uploader('Choose xlsx file', type=['xlsx', 'xlsb'], key='radarFile')
 
 
 def generate_excel_download_link(df):
