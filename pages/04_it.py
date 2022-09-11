@@ -12,7 +12,8 @@ st.title("Automation Application")
 st.subheader("IT traitement")
 
 uploaded_f = st.sidebar.file_uploader("Choose xlsx file", type=['xlsx', 'xlsb'], key='itFile')
-
+# Supprimer les valeurs uniques pour IT
+# Faire des traitements complementqires et s'assurer que tout concorde
 
 # For IT
 def generate_excel_download_link(df):
@@ -63,6 +64,7 @@ def it():
         cpt += 1
 
     it_df = df.groupby(['num_ligne', 'pays'], as_index=False)[['nb_appels']].sum()
+
     it_df['outils'] = "IT"
 
     biggest = len(it_df.index.unique().tolist())
