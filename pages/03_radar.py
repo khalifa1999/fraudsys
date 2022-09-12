@@ -28,9 +28,7 @@ def generate_excel_download_link(df):
 def radar():
     df = pd.read_excel(uploaded_fradar, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
-    df['range 7'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:7]
     df['range 8'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:8]
-    df['range 9'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:9]
 
     # creer une colonne range verifier si un range y apparait plus de 2 fois grace
     # a count restituer cela sous forme de df avec le range et le compte
@@ -44,7 +42,7 @@ if uploaded_fradar is not None:
 
 
     # Use dataframe to make our treatments
-    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Pays Origine", "range 8"], as_index=False)[
+    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Date de creation","Pays Origine", "range 8"], as_index=False)[
         ['Nombre de cdr participants']].sum()
     cdr = cdr.sort_values(
         "Nombre de cdr participants",
