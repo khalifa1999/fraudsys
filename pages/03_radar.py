@@ -42,7 +42,7 @@ if uploaded_fradar is not None:
 
 
     # Use dataframe to make our treatments
-    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Date de creation","Pays Origine", "range 8"], as_index=False)[
+    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Pays Origine", "range 8"], as_index=False)[
         ['Nombre de cdr participants']].sum()
     cdr = cdr.sort_values(
         "Nombre de cdr participants",
