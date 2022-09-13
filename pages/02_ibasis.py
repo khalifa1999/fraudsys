@@ -15,6 +15,8 @@ def ibasis():
     # st.write(geocoder.description_for_number(parse, 'en'))
 
     ibasis_df['Pays'] = ""
+    ibasis_df['Outils'] = "Ibasis"
+    ibasis_df['Date'] = ibasis_df['Call Time'].astype('datetime64[ns]')
 
     cpt = 0
     for x in ibasis_df['B Num']:
@@ -28,8 +30,8 @@ def ibasis():
             pass
         cpt += 1
 
-    df = ibasis_df.groupby(['B Num', 'Pays'], as_index=False).nunique()
-    new = df[['B Num', 'Pays']]
+    df = ibasis_df.groupby(['B Num',  'Outils', 'Date', 'Pays'], as_index=False).nunique()
+    new = df[['B Num', 'Outils',  'Date', 'Pays']]
     st.write(unique)
     return new
 

@@ -62,10 +62,10 @@ def it():
             raise Exception('Erreur sur le numero from ') from e
             pass
         cpt += 1
+    df['outils'] = "IT"
+    it_df = df.groupby(['num_ligne', 'outils', 'd_appel', 'pays'], as_index=False)[['nb_appels']].sum()
 
-    it_df = df.groupby(['num_ligne', 'pays'], as_index=False)[['nb_appels']].sum()
 
-    it_df['outils'] = "IT"
 
     biggest = len(it_df.index.unique().tolist())
     # slider = st.sidebar.slider(

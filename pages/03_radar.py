@@ -29,7 +29,8 @@ def radar():
     df = pd.read_excel(uploaded_fradar, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
     df['range 8'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:8]
-    df['Outils'] = "IT"
+    df['Outils'] = "Radar"
+    df['Date de creation'] = df['Date de creation'].astype('datetime64[ns]')
 
     # creer une colonne range verifier si un range y apparait plus de 2 fois grace
     # a count restituer cela sous forme de df avec le range et le compte
