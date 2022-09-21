@@ -22,7 +22,6 @@ def generate_excel_download_link(df):
     return st.markdown(href, unsafe_allow_html=True)
 
 
-
 # For radar
 @st.experimental_memo
 def radar():
@@ -30,7 +29,7 @@ def radar():
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
     df['range 8'] = df["Valeur d'aggregation"].astype(str).str.replace('.', '').str[0:8]
     df['Outils'] = "Radar"
-    df['Date de creation'] = df['Date de creation'].astype('datetime64[ns]')
+    df['Date de creation'] = df['Date de creation']
 
     # creer une colonne range verifier si un range y apparait plus de 2 fois grace
     # a count restituer cela sous forme de df avec le range et le compte
@@ -42,9 +41,9 @@ if uploaded_fradar is not None:
 
     # for radar
 
-
     # Use dataframe to make our treatments
-    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Outils", "Date de creation","Pays Origine", "range 8"], as_index=False)[
+    cdr = radar_dataframe.groupby(["Valeur d'aggregation", "Outils", "Date de creation", "Pays Origine", "range 8"],
+                                  as_index=False)[
         ['Nombre de cdr participants']].sum()
     cdr = cdr.sort_values(
         "Nombre de cdr participants",
@@ -61,29 +60,52 @@ if uploaded_fradar is not None:
         return 'color: %s' % color
 
 
+
+
+    # Color of the range
+
+
+
+
+
     # Let's apply the sorting function
-    unique_val = len(cdr["Valeur d'aggregation"].unique())+1
+    unique_val = len(cdr["Valeur d'aggregation"].unique())
     st.write(unique_val)
 
     range_display = cdr['range 8'].value_counts(dropna=False)
 
-    biggest = len(radar_dataframe.index.unique().tolist())
+    biggest = len(radar_dataframe["Valeur d'aggregation"].unique().tolist())
     slider = st.sidebar.slider(
         "We're gonna display the different functions depending of the slide value", 1, biggest, 30
     )
     cdr = cdr.nlargest(slider, 'Nombre de cdr participants')
 
     cdr = cdr.style.applymap(colour, subset=["Nombre de cdr participants"])
+    # cdr = cdr.style.applymap(range_id, subset=["range 8"])
+
+    # cpt = 0
+    # for x in range_display.index:
+            # st.write(range_display.index)
+            # cpt += 1
+
+
+    def range_id(value):
+        if pd.value_counts(value) > 0:
+            color = 'orange'
+        else:
+            color = 'green'
+
+        return 'color: %s' % color
+
+
     # st.dataframe(cdr)
-
-
 
     st.dataframe(filter_dataframe(cdr))
     st.dataframe(range_display)
 
 
 
-    generate_excel_download_link(cdr)
+
 
     # st.write(pays.keys())
 

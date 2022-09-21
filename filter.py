@@ -6,6 +6,7 @@ from pandas.api.types import (
     is_numeric_dtype,
     is_object_dtype,
 )
+from todict import generate_excel_download_link
 
 st.title("Auto Filter Dataframes in Streamlit")
 
@@ -31,7 +32,7 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     for col in df.columns:
         if is_object_dtype(df[col]):
             try:
-                df[col] = pd.to_datetime(df[col])
+                df[col] = pd.to_datetime(df[col], format="%Y/%m/%d %H:%m:%s")
             except Exception:
                 pass
 
@@ -83,5 +84,6 @@ def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
                 )
                 if user_text_input:
                     df = df[df[column].str.contains(user_text_input)]
-
+    st.write(len(df.index.unique()))
+    generate_excel_download_link(df)
     return df
