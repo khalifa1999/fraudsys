@@ -3,12 +3,12 @@ import base64  # Standard Python Module
 from io import StringIO, BytesIO  # Standard Python Module
 import streamlit as st
 # file_path = "K:/FRAUDBUSTER/pays risque wanguiri.xlsx"
-file_path = "K:/FRAUDBUSTER/Copie de Liste des mn indivisible.xlsx"
-reader = pd.read_excel(file_path, sheet_name='Feuil2', engine='openpyxl')
-reader = reader.set_index("Code")
+# file_path = "K:/FRAUDBUSTER/Copie de Liste des mn indivisible.xlsx"
+# reader = pd.read_excel(file_path, sheet_name='Feuil2', engine='openpyxl')
+# reader = reader.set_index("Code")
 
 # print(reader)
-print(reader.to_dict())
+# print(reader.to_dict())
 
 pays = {1: 'US/Canada', 1242: 'Bahamas', 1246: 'Barbade', 1264: 'Anguilla', 1268: 'Antigua et Barbuda',
         1284: 'Iles Vierges Britanniques', 1340: 'Iles Vierges Americaines', 1345: 'Iles Caïmans', 1441: 'Bermudes',
