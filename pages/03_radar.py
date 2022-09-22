@@ -71,6 +71,8 @@ if uploaded_fradar is not None:
     # Let's apply the sorting function
     unique_val = len(cdr["Valeur d'aggregation"].unique())
     st.write(unique_val)
+    cdr = cdr.drop_duplicates(subset="Valeur d'aggregation", keep='first')
+
 
     range_display = cdr['range 8'].value_counts(dropna=False)
 
