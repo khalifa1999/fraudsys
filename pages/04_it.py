@@ -26,6 +26,7 @@ def generate_excel_download_link(df):
     return st.markdown(href, unsafe_allow_html=True)
 
 
+@st.experimental_singleton
 def it():
     # color function
     def colour(value):
@@ -89,5 +90,7 @@ if uploaded_f is not None:
     st.dataframe(filter_dataframe(it_dataframe))
 
     generate_excel_download_link(it_dataframe)
+    if st.button('Clear All'):
+        st.experimental_singleton.clear()
 
     # for it

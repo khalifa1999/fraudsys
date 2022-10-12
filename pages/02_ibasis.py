@@ -5,7 +5,7 @@ from phonenumbers import geocoder
 
 uploaded_ibasis = st.sidebar.file_uploader("Choose a excel file", type=['xlsx', 'xlsb'], key='ibasisFile')
 
-
+@st.experimental_singleton
 def ibasis():
     ibasis_df = pd.read_excel(uploaded_ibasis, engine='openpyxl')
     unique = len(ibasis_df['B Num'].unique())
@@ -39,3 +39,5 @@ def ibasis():
 if uploaded_ibasis is not None:
     display = ibasis()
     st.dataframe(display)
+    if st.button('Clear All'):
+        st.experimental_singleton.clear()

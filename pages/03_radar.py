@@ -23,7 +23,7 @@ def generate_excel_download_link(df):
 
 
 # For radar
-@st.experimental_memo
+@st.experimental_singleton
 def radar():
     df = pd.read_excel(uploaded_fradar, engine='openpyxl')
     df["Valeur d'aggregation"] = pd.to_numeric(df["Valeur d'aggregation"])
@@ -104,6 +104,9 @@ if uploaded_fradar is not None:
 
     st.dataframe(filter_dataframe(cdr))
     st.dataframe(range_display)
+
+    if st.button('Clear All'):
+        st.experimental_singleton.clear()
 
 
 
